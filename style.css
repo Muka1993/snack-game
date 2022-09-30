@@ -32,6 +32,7 @@
 
   canvas {
     background: url(imagens/vecteezy_outline-honeycomb.jpg);
+    background-size: contain;
   }
 
   .container {
