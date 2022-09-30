@@ -13,6 +13,39 @@ let CTX = dom_canvas.getContext("2d");
 const W = (dom_canvas.width = 800);
 const H = (dom_canvas.height = 800);
 
+// ALERT 
+
+var nome = prompt("Como você se chama?");
+window.alert( nome + ' ' + 'agora o Samuel tem o domínio do seu computador!')
+
+window.alert('Vamos para o jogo ! ! !' + ' ' + nome)
+
+
+
+// AUDIO
+
+function execSom() {
+  let playAudio = document.getElementById("playaudio");
+  playAudio.play();
+}
+
+const somMusica = new Audio();
+somMusica.src = 'night-crickets,mp3';
+somMusica.loop = true;
+somMusica.play();
+
+
+const somEfeito = new Audio();
+somEfeito.src = 'hit.mp3';
+
+const somOver = new Audio();
+somOver.src ='arcade-retro-game-over.mp3';
+
+
+const somReset = new Audio();
+somReset.src = 'small-stone.mp3';
+
+
 // VARIÁVEL COBRA
 
 let snake,
@@ -60,12 +93,13 @@ let helpers = {
     for (let i = 0; i < particles.length; i++) {
       if (particles[i].size <= 0) {
         particles.splice(i, 1);
+        somEfeito.play();
       }
     }
   },
   drawGrid() {
     CTX.lineWidth = 1.1;
-    CTX.strokeStyle = "#232332";
+    CTX.strokeStyle = "transparent";
     CTX.shadowBlur = 0;
     for (let i = 1; i < cells; i++) {
       let f = (W / cells) * i;
@@ -179,7 +213,7 @@ class Snake {
     this.index = i;
     this.delay = 5;
     this.size = W / cells;
-    this.color = "white";
+    this.color = "rgba(0,200,0,.9)";
     this.history = [];
     this.total = 1;
   }
@@ -188,14 +222,14 @@ class Snake {
     let { x, y } = this.pos;
     CTX.fillStyle = this.color;
     CTX.shadowBlur = 20;
-    CTX.shadowColor = "rgba(255,255,255,.3 )";
+    CTX.shadowColor = "rgb(0,128,0 )";
     CTX.fillRect(x, y, this.size, this.size);
     CTX.shadowBlur = 0;
     if (this.total >= 2) {
       for (let i = 0; i < this.history.length - 1; i++) {
         let { x, y } = this.history[i];
         CTX.lineWidth = 1;
-        CTX.fillStyle = "rgba(225,225,225,1)";
+        CTX.fillStyle = "rgb(0,128,0)";
         CTX.fillRect(x, y, this.size, this.size);
       }
     }
@@ -407,6 +441,7 @@ function gameOver() {
   CTX.font = "20px Poppins, sans-serif";
   CTX.fillText(`SCORE   ${score}`, W / 2, H / 2 + 50);
   CTX.fillText(`RECORDE   ${maxScore}`, W / 2, H / 2 + 80);
+  somOver.play();
 }
 
 // FUNÇÃO QUE RESETA O JOGO
@@ -420,6 +455,7 @@ function reset() {
   isGameOver = false;
   cancelAnimationFrame(requestID);
   loop();
+  somReset.play();
 }
 
 initialize();

@@ -31,7 +31,7 @@
   /* ÁREA DO CANVAS */
 
   canvas {
-    background-color: #181825;
+    background: url(imagens/vecteezy_outline-honeycomb.jpg);
   }
 
   .container {
